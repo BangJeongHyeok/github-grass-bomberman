@@ -1,112 +1,137 @@
 /**
- * Original pixel art for the project: "Fuse", a round-helmet bomber made as a
- * homage to classic arcade bomber games (not a copy of any existing character).
- * Big round helmet, dark visor with bright eyes, a lit-fuse antenna, gloves and
- * boots. Every frame is 12x16 art pixels; one art pixel = one SVG unit. The feet
- * sit on the bottom edge, so a frame is drawn at (-6, -10) relative to the
- * centre of the 12x12 cell it stands on.
+ * Classic white Bomberman-style pixel hero for Fuse.
+ * No ears, no tinted visor: a white rounded helmet frames a warm cream face
+ * with two vertical black eyes. Pink is used only for the antenna, gloves,
+ * and boots. The body is blue with a dark belt and gold buckle.
  *
- * You can replace the hero with your own art: see `HeroSpriteSet` and the
- * `--hero-sprite` CLI option.
+ * Every frame is exactly 12x16 art pixels. The feet sit on the bottom edge;
+ * draw at (-6, -10) relative to the centre of a 12x12 cell.
+ * Right-facing frames are mirrored from the left-facing frames by the renderer.
  */
 
 export type Sprite = readonly string[];
 
-/** Colour per palette character; '.' is transparent. `k` (outline) is themable. */
+/** Colour per palette character; '.' is transparent. `k` is themable. */
 export const HERO_COLORS: Record<string, string> = {
-  k: "#2b2140", // outline
-  F: "#ffe066", // spark on the antenna
-  f: "#d8b07a", // fuse antenna
-  R: "#ef4b4b", // helmet
-  r: "#b8303c", // helmet shade
-  h: "#ffb3b3", // helmet highlight
-  v: "#1d1b38", // visor
-  w: "#ffffff", // eyes
-  b: "#3346b8", // suit
-  d: "#24318a", // suit shade
-  y: "#ffc93c", // belt
-  g: "#ffffff", // gloves
-  n: "#ef4b4b", // boots
+  k: "#211d31", // dark pixel outline
+  W: "#f8f9ff", // white helmet and sleeves / legs
+  H: "#ffffff", // helmet shine
+  s: "#c7ced9", // helmet shading
+  a: "#ffe3a0", // warm cream face (not pink)
+  e: "#191626", // vertical black eyes
+  b: "#244cf4", // royal blue suit
+  B: "#577aff", // suit highlight
+  d: "#192e9b", // darker blue suit shading
+  P: "#ff4383", // pink antenna and gloves / boots
+  p: "#c92668", // pink shading
+  Y: "#ffeb55", // gold buckle highlight
+  y: "#ffad1f", // gold buckle shading
 };
 
-const ANTENNA = ["......F.....", ".....f......"];
-const HEAD_FRONT = [
-  "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kRvvvvvvRk.",
-  ".kRvwvvwvRk.",
-  ".kRvwvvwvRk.",
-  ".kRRvvvvRRk.",
-  "..kkrrrrkk..",
+// Pink round antenna is on TOP of the helmet, not on its sides.
+const ANTENNA: Sprite = [
+  ".....pPp....",
+  "......W.....",
 ];
-const HEAD_BACK = [
-  "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kRRRRRRRRk.",
-  ".kRRRRRRRRk.",
-  ".krRRRRRRrk.",
-  ".krrRRRRrrk.",
-  "..kkrrrrkk..",
-];
-const BODY = [".gkbbbbbbkg.", ".gkbyyyybkg.", "..kddbbddk.."];
 
-const LEGS_STAND = ["..kbbkkbbk..", "..knnkknnk..", "...kk..kk..."];
-const LEGS_WALK_A = ["..kbbkknnk..", "..knnk.kk...", "...kk......."];
-const LEGS_WALK_B = ["..knnkkbbk..", "...kk.knnk..", ".......kk..."];
+const HEAD_FRONT: Sprite = [
+  "...kkkkkk...",
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaaaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaaaaaaWk.",
+  "..kWssssWk..",
+];
+
+const HEAD_BACK: Sprite = [
+  "...kkkkkk...",
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWssssWWk.",
+  "..kWssssWk..",
+];
+
+// Hands appear BELOW the helmet, at shoulder level, never as "ears".
+const BODY_FRONT: Sprite = [
+  "..kWbbbbWk..",
+  ".PkWbBBbWkP.",
+  ".pkWkYykWkp.",
+];
+const BODY_BACK: Sprite = [
+  "..kWbbbbWk..",
+  ".PkWbBBbWkP.",
+  ".pkWkkkkWkp.",
+];
+
+const LEGS_STAND: Sprite = [
+  "...kW..Wk...",
+  "..kPPk.kPPk.",
+  "..kkkk.kkkk.",
+];
+const LEGS_WALK_A: Sprite = [
+  "..kW...Wk...",
+  ".kPPk...kPPk",
+  ".kkkk...kkkk",
+];
+const LEGS_WALK_B: Sprite = [
+  "...kW..Wk...",
+  "...kPPkkPPk.",
+  "...kkkkkkkk.",
+];
 
 export const HERO_DOWN: Sprite[] = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
   ...ANTENNA,
   ...HEAD_FRONT,
-  ...BODY,
+  ...BODY_FRONT,
   ...legs,
 ]);
-
 export const HERO_UP: Sprite[] = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
   ...ANTENNA,
   ...HEAD_BACK,
-  ...BODY,
+  ...BODY_BACK,
   ...legs,
 ]);
 
-const SIDE_TOP = [
-  ".....F......",
-  "......f.....",
+/** Facing left, mirrored at render-time for right. */
+const SIDE_TOP: Sprite = [
+  ...ANTENNA,
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kvvvvRRRRk.",
-  ".kwvvvRRRRk.",
-  ".kwvvvRRRRk.",
-  ".kvvvRRRRrk.",
-  "..kkrrrrkk..",
-  "...kbbgbk...",
-  "...kbygbk...",
-  "...kddddk...",
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaWWWk.",
+  ".kWaeaaWWWk.",
+  ".kWaeaaWWWk.",
+  ".kWaaaaWWWk.",
+  "..kWssssWk..",
+  "..kWbbbkWk..",
+  ".PkWbBbdk...",
+  ".pkWkYyk....",
 ];
 
-/** Facing left; the right-facing frames are mirrored at render time. */
-export const HERO_LEFT: Sprite[] = [
-  [...SIDE_TOP, "...kbbbk....", "..knnnnk....", "...kkkk....."],
-  [...SIDE_TOP, "..kbk.kbk...", ".knnk.knnk..", "..kk...kk..."],
-  [...SIDE_TOP, "...kbbbk....", "..knnnnk....", "...kkkk....."],
-];
+export const HERO_LEFT: Sprite[] = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
+  ...SIDE_TOP,
+  ...legs,
+]);
 
-/** Both arms up, eyes squeezed happily. */
+/** Hands raised at the helmet's lower edge, without ear-like attachments. */
 export const HERO_VICTORY: Sprite = [
   ...ANTENNA,
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  "gkRhRRRRRRkg",
-  "gkRvvvvvvRkg",
-  "bkRvwvvwvRkb",
-  "bkRwvvvvwRkb",
-  ".bkRvvvvRkb.",
-  "..kkrrrrkk..",
-  "..kbbbbbbk..",
-  "..kbyyyybk..",
-  "..kddbbddk..",
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaaaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaaaaaaWk.",
+  ".PkWssssWkP.",
+  ".WkWbbbbWkW.",
+  "..kWbBBbWk..",
+  "..kWkYykWk..",
   ...LEGS_STAND,
 ];
 
