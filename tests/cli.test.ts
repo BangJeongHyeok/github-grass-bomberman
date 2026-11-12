@@ -4,6 +4,8 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, it } from "node:test";
 import { main, parseArgs, parseOutputSpec } from "../src/cli.js";
+import { generate } from "../src/index.js";
+import { sampleCalendar } from "../src/github/sample.js";
 
 describe("CLI", () => {
   it("parses output specs with per-file options", () => {
@@ -49,7 +51,9 @@ describe("CLI", () => {
       assert.match(dark, /#161b22/);
       // a custom hero from a JSON file (the bundled template)
       await main(["--source", "sample", "-q", "--hero-sprite", "examples/hero-sprite.json", "-o", join(dir, "h.svg")]);
-      assert.equal(await readFile(join(dir, "h.svg"), "utf8"), light);
+      const template = JSON.parse(await readFile("examples/hero-sprite.json", "utf8"));
+      const expected = generate(sampleCalendar({ seed: "sample" }), { heroSprite: template }).svg;
+      assert.equal(await readFile(join(dir, "h.svg"), "utf8"), expected);
       // the saved calendar reproduces the same animation
       await main(["--data", data, "-q", "-o", join(dir, "again.svg")]);
       assert.equal(await readFile(join(dir, "again.svg"), "utf8"), light);

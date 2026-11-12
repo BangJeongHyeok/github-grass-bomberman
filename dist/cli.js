@@ -78,103 +78,125 @@ function fmt(n, decimals = 3) {
 
 // src/animation/sprites.ts
 var HERO_COLORS = {
-  k: "#2b2140",
-  // outline
-  F: "#ffe066",
-  // spark on the antenna
-  f: "#d8b07a",
-  // fuse antenna
-  R: "#ef4b4b",
-  // helmet
-  r: "#b8303c",
-  // helmet shade
-  h: "#ffb3b3",
-  // helmet highlight
-  v: "#1d1b38",
-  // visor
-  w: "#ffffff",
-  // eyes
-  b: "#3346b8",
-  // suit
-  d: "#24318a",
-  // suit shade
-  y: "#ffc93c",
-  // belt
-  g: "#ffffff",
-  // gloves
-  n: "#ef4b4b"
-  // boots
+  k: "#211d31",
+  // dark pixel outline
+  W: "#f8f9ff",
+  // white helmet and sleeves / legs
+  H: "#ffffff",
+  // helmet shine
+  s: "#c7ced9",
+  // helmet shading
+  a: "#ffe3a0",
+  // warm cream face (not pink)
+  e: "#191626",
+  // vertical black eyes
+  b: "#244cf4",
+  // royal blue suit
+  B: "#577aff",
+  // suit highlight
+  d: "#192e9b",
+  // darker blue suit shading
+  P: "#ff4383",
+  // pink antenna and gloves / boots
+  p: "#c92668",
+  // pink shading
+  Y: "#ffeb55",
+  // gold buckle highlight
+  y: "#ffad1f"
+  // gold buckle shading
 };
-var ANTENNA = ["......F.....", ".....f......"];
+var ANTENNA = [
+  ".....pPp....",
+  "......W....."
+];
 var HEAD_FRONT = [
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kRvvvvvvRk.",
-  ".kRvwvvwvRk.",
-  ".kRvwvvwvRk.",
-  ".kRRvvvvRRk.",
-  "..kkrrrrkk.."
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaaaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaaaaaaWk.",
+  "..kWssssWk.."
 ];
 var HEAD_BACK = [
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kRRRRRRRRk.",
-  ".kRRRRRRRRk.",
-  ".krRRRRRRrk.",
-  ".krrRRRRrrk.",
-  "..kkrrrrkk.."
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWWWWWWWk.",
+  ".kWWssssWWk.",
+  "..kWssssWk.."
 ];
-var BODY = [".gkbbbbbbkg.", ".gkbyyyybkg.", "..kddbbddk.."];
-var LEGS_STAND = ["..kbbkkbbk..", "..knnkknnk..", "...kk..kk..."];
-var LEGS_WALK_A = ["..kbbkknnk..", "..knnk.kk...", "...kk......."];
-var LEGS_WALK_B = ["..knnkkbbk..", "...kk.knnk..", ".......kk..."];
+var BODY_FRONT = [
+  "..kWbbbbWk..",
+  ".PkWbBBbWkP.",
+  ".pkWkYykWkp."
+];
+var BODY_BACK = [
+  "..kWbbbbWk..",
+  ".PkWbBBbWkP.",
+  ".pkWkkkkWkp."
+];
+var LEGS_STAND = [
+  "...kW..Wk...",
+  "..kPPk.kPPk.",
+  "..kkkk.kkkk."
+];
+var LEGS_WALK_A = [
+  "..kW...Wk...",
+  ".kPPk...kPPk",
+  ".kkkk...kkkk"
+];
+var LEGS_WALK_B = [
+  "...kW..Wk...",
+  "...kPPkkPPk.",
+  "...kkkkkkkk."
+];
 var HERO_DOWN = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
   ...ANTENNA,
   ...HEAD_FRONT,
-  ...BODY,
+  ...BODY_FRONT,
   ...legs
 ]);
 var HERO_UP = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
   ...ANTENNA,
   ...HEAD_BACK,
-  ...BODY,
+  ...BODY_BACK,
   ...legs
 ]);
 var SIDE_TOP = [
-  ".....F......",
-  "......f.....",
+  ...ANTENNA,
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  ".kRhRRRRRRk.",
-  ".kvvvvRRRRk.",
-  ".kwvvvRRRRk.",
-  ".kwvvvRRRRk.",
-  ".kvvvRRRRrk.",
-  "..kkrrrrkk..",
-  "...kbbgbk...",
-  "...kbygbk...",
-  "...kddddk..."
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaWWWk.",
+  ".kWaeaaWWWk.",
+  ".kWaeaaWWWk.",
+  ".kWaaaaWWWk.",
+  "..kWssssWk..",
+  "..kWbbbkWk..",
+  ".PkWbBbdk...",
+  ".pkWkYyk...."
 ];
-var HERO_LEFT = [
-  [...SIDE_TOP, "...kbbbk....", "..knnnnk....", "...kkkk....."],
-  [...SIDE_TOP, "..kbk.kbk...", ".knnk.knnk..", "..kk...kk..."],
-  [...SIDE_TOP, "...kbbbk....", "..knnnnk....", "...kkkk....."]
-];
+var HERO_LEFT = [LEGS_STAND, LEGS_WALK_A, LEGS_WALK_B].map((legs) => [
+  ...SIDE_TOP,
+  ...legs
+]);
 var HERO_VICTORY = [
   ...ANTENNA,
   "...kkkkkk...",
-  "..kRhhRRRk..",
-  "gkRhRRRRRRkg",
-  "gkRvvvvvvRkg",
-  "bkRvwvvwvRkb",
-  "bkRwvvvvwRkb",
-  ".bkRvvvvRkb.",
-  "..kkrrrrkk..",
-  "..kbbbbbbk..",
-  "..kbyyyybk..",
-  "..kddbbddk..",
+  "..kWHWWWWk..",
+  ".kWWWWWWWWk.",
+  ".kWaaaaaaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaeaaeaWk.",
+  ".kWaaaaaaWk.",
+  ".PkWssssWkP.",
+  ".WkWbbbbWkW.",
+  "..kWbBBbWk..",
+  "..kWkYykWk..",
   ...LEGS_STAND
 ];
 var DEFAULT_HERO = {

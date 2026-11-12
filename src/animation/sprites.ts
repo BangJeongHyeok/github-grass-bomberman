@@ -1,5 +1,12 @@
 /**
  * Classic white Bomberman-style pixel hero for Fuse.
+ *
+ * Non-commercial fan art of the Bomberman character, hand-drawn pixel by pixel
+ * from reference images; no game data was extracted. Bomberman and its
+ * characters are trademarks and copyrighted works of Konami. This project is not
+ * affiliated with or endorsed by Konami, and the MIT license of this repository
+ * covers the code only, not the character design.
+ *
  * No ears, no tinted visor: a white rounded helmet frames a warm cream face
  * with two vertical black eyes. Pink is used only for the antenna, gloves,
  * and boots. The body is blue with a dark belt and gold buckle.
