@@ -1,0 +1,7 @@
+node_modules/
+.tmp/
+coverage/
+*.log
+.DS_Store
+# generated locally; the workflow publishes these to the `output` branch
+/out/
