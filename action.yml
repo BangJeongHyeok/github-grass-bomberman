@@ -1,0 +1,49 @@
+name: "GitHub Contribution Bomber"
+description: "Generate an animated SVG of a pixel bomber blowing up your GitHub contribution graph."
+author: "BangJeongHyeok"
+branding:
+  icon: "zap"
+  color: "green"
+
+inputs:
+  github_user_name:
+    description: "GitHub user whose contribution graph is used."
+    required: true
+  github_token:
+    description: "Token for the GraphQL API (read-only use; the default workflow token is enough)."
+    required: false
+    default: ${{ github.token }}
+  outputs:
+    description: |
+      Files to generate, one per line. Options go in a query string, e.g.
+        dist/github-bomber.svg
+        dist/github-bomber-dark.svg?theme=dark&seed=7
+    required: false
+    default: |
+      dist/github-bomber.svg
+      dist/github-bomber-dark.svg?theme=dark
+  seed:
+    description: "Random seed (same data + same seed = same animation)."
+    required: false
+    default: ""
+
+runs:
+  using: "composite"
+  steps:
+    - name: Generate SVG
+      shell: bash
+      env:
+        # Inputs go through environment variables, never straight into the script.
+        GITHUB_USER: ${{ inputs.github_user_name }}
+        GITHUB_TOKEN: ${{ inputs.github_token }}
+        BOMBER_OUTPUTS: ${{ inputs.outputs }}
+        BOMBER_SEED: ${{ inputs.seed }}
+      run: |
+        set -euo pipefail
+        if ! node -e 'process.exit(Number(process.versions.node.split(".")[0]) >= 18 ? 0 : 1)'; then
+          echo "::error::Node.js 18 or newer is required (found $(node -v)). Add actions/setup-node before this step."
+          exit 1
+        fi
+        args=(--outputs "$BOMBER_OUTPUTS")
+        if [ -n "$BOMBER_SEED" ]; then args+=(--seed "$BOMBER_SEED"); fi
+        node "$GITHUB_ACTION_PATH/dist/cli.js" "${args[@]}"

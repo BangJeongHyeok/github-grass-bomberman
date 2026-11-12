@@ -1,0 +1,120 @@
+{
+ "data": {
+  "user": {
+   "contributionsCollection": {
+    "contributionCalendar": {
+     "weeks": [
+      {
+       "contributionDays": [
+        {
+         "date": "2026-10-28",
+         "weekday": 3,
+         "contributionCount": 0,
+         "contributionLevel": "NONE"
+        },
+        {
+         "date": "2026-10-29",
+         "weekday": 4,
+         "contributionCount": 2,
+         "contributionLevel": "FIRST_QUARTILE"
+        },
+        {
+         "date": "2026-10-30",
+         "weekday": 5,
+         "contributionCount": 4,
+         "contributionLevel": "SECOND_QUARTILE"
+        },
+        {
+         "date": "2026-10-31",
+         "weekday": 6,
+         "contributionCount": 6,
+         "contributionLevel": "THIRD_QUARTILE"
+        }
+       ]
+      },
+      {
+       "contributionDays": [
+        {
+         "date": "2026-11-01",
+         "weekday": 0,
+         "contributionCount": 8,
+         "contributionLevel": "FOURTH_QUARTILE"
+        },
+        {
+         "date": "2026-11-02",
+         "weekday": 1,
+         "contributionCount": 0,
+         "contributionLevel": "NONE"
+        },
+        {
+         "date": "2026-11-03",
+         "weekday": 2,
+         "contributionCount": 2,
+         "contributionLevel": "FIRST_QUARTILE"
+        },
+        {
+         "date": "2026-11-04",
+         "weekday": 3,
+         "contributionCount": 4,
+         "contributionLevel": "SECOND_QUARTILE"
+        },
+        {
+         "date": "2026-11-05",
+         "weekday": 4,
+         "contributionCount": 6,
+         "contributionLevel": "THIRD_QUARTILE"
+        },
+        {
+         "date": "2026-11-06",
+         "weekday": 5,
+         "contributionCount": 8,
+         "contributionLevel": "FOURTH_QUARTILE"
+        },
+        {
+         "date": "2026-11-07",
+         "weekday": 6,
+         "contributionCount": 0,
+         "contributionLevel": "NONE"
+        }
+       ]
+      },
+      {
+       "contributionDays": [
+        {
+         "date": "2026-11-08",
+         "weekday": 0,
+         "contributionCount": 2,
+         "contributionLevel": "FIRST_QUARTILE"
+        },
+        {
+         "date": "2026-11-09",
+         "weekday": 1,
+         "contributionCount": 4,
+         "contributionLevel": "SECOND_QUARTILE"
+        },
+        {
+         "date": "2026-11-10",
+         "weekday": 2,
+         "contributionCount": 6,
+         "contributionLevel": "THIRD_QUARTILE"
+        },
+        {
+         "date": "2026-11-11",
+         "weekday": 3,
+         "contributionCount": 8,
+         "contributionLevel": "FOURTH_QUARTILE"
+        },
+        {
+         "date": "2026-11-12",
+         "weekday": 4,
+         "contributionCount": 0,
+         "contributionLevel": "NONE"
+        }
+       ]
+      }
+     ]
+    }
+   }
+  }
+ }
+}
